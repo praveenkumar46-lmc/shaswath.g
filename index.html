@@ -1,0 +1,1359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D'Vine Healthcare</title>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Smooth scrolling behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: #fdfdff;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+
+        /* --- SCROLL ANIMATION --- */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+        }
+
+        /* --- STATS SECTION ANIMATIONS --- */
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .scroll-animate.stat-card {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-animate.stat-card.visible {
+            opacity: 1;
+            transform: scale(1);
+            animation: zoomIn 0.8s forwards;
+        }
+
+        .stats-section .stat-card:nth-child(1) { transition-delay: 0.1s; }
+        .stats-section .stat-card:nth-child(2) { transition-delay: 0.2s; }
+        .stats-section .stat-card:nth-child(3) { transition-delay: 0.3s; }
+        .stats-section .stat-card:nth-child(4) { transition-delay: 0.4s; }
+
+        .stat-card:hover .stat-icon {
+            transform: rotate(360deg);
+        }
+
+        /* --- WHY CHOOSE SECTION ANIMATIONS --- */
+        @keyframes fadeRotateIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+
+        .numbered-feature {
+            opacity: 0;
+            transform: translateY(20px) rotate(-5deg);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .numbered-feature.visible {
+            opacity: 1;
+            transform: translateY(0) rotate(0);
+            animation: fadeRotateIn 0.6s forwards;
+        }
+
+        .why-choose-content .numbered-feature:nth-of-type(1) { transition-delay: 0.2s; }
+        .why-choose-content .numbered-feature:nth-of-type(2) { transition-delay: 0.3s; }
+        .why-choose-content .numbered-feature:nth-of-type(3) { transition-delay: 0.4s; }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+            background: #226cf3;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(-15deg) scale(1.1);
+        }
+
+        .brand {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #203c73;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-right .nav-link {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #444;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .navbar-right .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #226cf3;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .navbar-right .nav-link:hover::after,
+        .navbar-right .nav-link.active::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .navbar-right .nav-link.active {
+            color: #226cf3;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            font-size: 1rem;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-left: 0.75rem;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #f0f5ff;
+            color: #226cf3;
+            transform: translateY(-2px);
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #142041;
+        }
+
+        /* --- HERO SECTION STYLES --- */
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #f3f5ff 0%, #e0eafc 100%);
+            min-height: 80vh;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-left {
+            flex: 1;
+            text-align: left;
+            animation: slideInUp 0.8s forwards;
+        }
+        
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-badge {
+            background: #fff;
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .hero-left h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #142041;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .hero-left h1 .highlight {
+            color: #4A6BFF;
+        }
+
+        .hero-left .description {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 500px;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .register-btn-hero {
+            background: linear-gradient(90deg, #4A6BFF 0%, #9E4FFF 100%);
+            color: #fff;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .register-btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 107, 255, 0.3);
+        }
+
+        .hero-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+             animation: slideInUp 0.8s 0.2s forwards;
+             opacity: 0;
+        }
+
+        .hero-slider-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            perspective: 1000px;
+        }
+        
+        .slider-arrow-on-card {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #142041;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 1;
+        }
+
+        .slider-arrow-on-card:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #4A6BFF;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-arrow-on-card.prev-arrow {
+            left: 15px;
+        }
+
+        .slider-arrow-on-card.next-arrow {
+            right: 15px;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform-origin: center bottom;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .course-card.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            z-index: 3;
+        }
+        
+        .course-card.stack-1 {
+            opacity: 1;
+            transform: scale(0.95) translateY(15px);
+            z-index: 2;
+        }
+
+        .course-card.stack-2 {
+            opacity: 1;
+            transform: scale(0.9) translateY(30px);
+            z-index: 1;
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-card-content {
+            padding: 1.5rem;
+        }
+
+        .training-type {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .training-type i {
+            margin-right: 8px;
+        }
+
+        .course-card h3 {
+            font-size: 1.4rem;
+            color: #142041;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .course-card p {
+            color: #666;
+            line-height: 1.6;
+            height: 40px;
+        }
+
+        .learn-more {
+            color: #4A6BFF;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .slider-nav {
+            display: flex;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .slider-nav .dot {
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slider-nav .dot.active {
+            background: #4A6BFF;
+            transform: scale(1.3);
+        }
+
+        .register-btn {
+            background: #226cf3 !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(34, 108, 243, 0.3);
+        }
+
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 70px auto;
+            padding: 0 5%;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(30, 42, 60, 0.08);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            min-width: 220px;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 12px 28px rgba(30, 42, 60, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #142041;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 1.05rem;
+            color: #444c5e;
+        }
+
+        .about-section-final {
+            padding: 80px 5%;
+            background: #f8faff;
+        }
+
+        .why-choose-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .why-choose-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .why-choose-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+        }
+
+        .why-choose-container:hover .why-choose-image img {
+            transform: scale(1.05);
+        }
+
+        .why-choose-content {
+            flex: 1.2;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #142041;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: #444c5e;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .numbered-feature {
+            background: #fff;
+            border: 1px solid #eef2f7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .numbered-feature:hover {
+            transform: translateX(5px) rotate(2deg);
+            border-left: 4px solid #226cf3;
+            box-shadow: 0 8px 20px rgba(34, 108, 243, 0.15);
+        }
+
+        .feature-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #226cf3;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .numbered-feature:hover .feature-number {
+            transform: rotate(360deg);
+        }
+
+        .feature-details .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #142041;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-details .feature-desc {
+            color: #444c5e;
+        }
+
+        .mission-vision-tabs {
+            max-width: 1200px;
+            margin: 80px auto 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            background: #fff;
+            border: 1px solid #e0e5eb;
+            color: #444c5e;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #226cf3;
+            color: #fff;
+            border-color: #226cf3;
+            box-shadow: 0 4px 10px rgba(34, 108, 243, 0.3);
+            transform: scale(1.05);
+        }
+
+        .tab-content {
+            display: none;
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content.active.mission {
+            animation: slideInLeft 0.5s ease-in-out;
+        }
+
+        .tab-content.active.vision {
+            animation: slideInRight 0.5s ease-in-out;
+        }
+
+        .tab-content.active.values {
+            animation: slideInLeft 0.5s ease-in-out;
+        }
+
+        .tab-content i {
+            font-size: 2.5rem;
+            color: #226cf3;
+            margin-bottom: 1rem;
+        }
+
+        .tab-content h3 {
+            font-size: 1.8rem;
+            color: #142041;
+            margin-bottom: 1rem;
+        }
+
+        .tab-content p {
+            font-size: 1.1rem;
+            color: #444c5e;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .testimonials-section {
+            padding: 80px 5%;
+            background: #f8faff;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .testimonials-left {
+            flex: 1;
+        }
+
+        .testimonials-right {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-slider {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .testimonial-card-new {
+            min-width: 100%;
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid #eef2f7;
+            padding: 2.5rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+            transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            opacity: 0;
+        }
+
+        .testimonial-card-new.active {
+            opacity: 1;
+            transform: none;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .testimonial-quote-new {
+            font-size: 1.25rem;
+            color: #333;
+            font-style: normal;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .testimonial-quote-new::before {
+            content: '\201C';
+            font-family: 'Georgia', serif;
+            font-size: 5rem;
+            color: #4A6BFF;
+            position: absolute;
+            left: -10px;
+            top: -20px;
+            opacity: 0.2;
+        }
+        
+        .testimonial-author-info {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .testimonial-media {
+            position: relative;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+        
+        .testimonial-media:hover .testimonial-img {
+            filter: brightness(0.8);
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .testimonial-media:hover .play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .testimonial-author-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-author-new {
+            font-weight: 700;
+            color: #142041;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-meta-new {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .cta-section-new {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #226cf3 0%, #1a54c8 100%);
+            text-align: center;
+            border-radius: 24px;
+            max-width: 1200px;
+            margin: 80px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section-new::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, transparent 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: wave 8s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position: 200% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-icon {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .cta-title-new {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .cta-desc-new {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn-new {
+            background: #fff;
+            color: #226cf3;
+            padding: 0.85rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .cta-btn-new:hover {
+            animation: bounce 0.4s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .site-footer {
+            background: #141c2d;
+            color: #e2e7f1;
+            padding: 60px 5%;
+        }
+
+        .footer-main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+
+        .footer-col {
+            flex: 1 1 220px;
+            min-width: 220px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo .logo-icon {
+            font-size: 2rem;
+            color: #226cf3;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .footer-col p {
+            color: #9aa5ba;
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a, .footer-contact-info li {
+            color: #9aa5ba;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            transform: translateX(10px);
+            color: #fff;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            color: #9aa5ba;
+            font-size: 1.2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: #226cf3;
+            transform: scale(1.3) translateY(-5px);
+        }
+
+        .footer-bottom {
+            width: 100%;
+            padding-top: 2rem;
+            border-top: 1px solid #2a344a;
+            font-size: 0.9rem;
+            color: #9aa5ba;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom a {
+            color: #9aa5ba;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer-bottom a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 950px) {
+             .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-left {
+                text-align: center;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+            .why-choose-container, .testimonials-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .menu-icon { display: block; }
+            .navbar-right {
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background-color: #fff;
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+            .navbar-right.mobile-menu-open { max-height: 500px; }
+            .navbar-right .nav-link, .navbar-right .login-btn, .navbar-right .register-btn {
+                padding: 1rem; margin: 0; border-top: 1px solid #f0f0f0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2.2rem; }
+            .cta-title-new { font-size: 2rem; }
+
+            .main-content, .about-section-final, .testimonials-section, .cta-section-new { padding: 60px 5%; }
+            .stats-section { margin: 50px auto; }
+            
+            .testimonial-card-new {
+                padding: 1.5rem;
+            }
+
+            .testimonial-quote-new {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-main { text-align: center; }
+            .footer-social { justify-content: center; }
+            .stat-card { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <span class="logo"><i class="fas fa-heart"></i></span>
+            <span class="brand">D'Vine Healthcare</span>
+        </div>
+        <div class="menu-icon"><i class="fas fa-bars"></i></div>
+        <div class="navbar-right">
+            <a class="nav-link active" href="#home">Home</a>
+            <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#courses">Courses</a>
+            <a class="nav-link" href="#contact">Contact</a>
+            <button class="login-btn">Login</button>
+            <button class="register-btn">Register Now</button>
+        </div>
+    </nav>
+
+    <main class="main-content" id="home">
+        <div class="hero-container">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span>🏆</span> The Leader in Medical Coding Training
+                </div>
+                <h1>The Leading Learning <span class="highlight">Platform</span> to Drive Your <span class="highlight">Career.</span></h1>
+                <p class="description">Discover our expert medical coding training programs. Get the knowledge and support you need to advance your career seamlessly..</p>
+                <button class="register-btn-hero">Register Today <span>&rarr;</span></button>
+            </div>
+            <div class="hero-right">
+                <div class="hero-slider-container">
+                    <div class="course-card">
+                         <img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Advanced Medical Coding">
+                        <div class="course-card-content">
+                            <p class="training-type"><i class="fas fa-chalkboard-teacher"></i> Classroom / Online Training</p>
+                            <h3>AMCT</h3>
+                            <p>Dive deeper into advanced topics and specialized coding for various medical fields.</p>
+                            <a href="#" class="learn-more">Learn More <span>&rarr;</span></a>
+                        </div>
+                    </div>
+                     <div class="course-card">
+                         <img src="https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Medical Billing">
+                        <div class="course-card-content">
+                            <p class="training-type"><i class="fas fa-chalkboard-teacher"></i> Online Training</p>
+                            <h3>MBC</h3>
+                            <p>Master the essentials of medical billing, from claims processing to revenue cycle management.</p>
+                            <a href="#" class="learn-more">Learn More <span>&rarr;</span></a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Basic Medical Coding Training">
+                        <div class="course-card-content">
+                            <p class="training-type"><i class="fas fa-chalkboard-teacher"></i> Classroom / Online Training</p>
+                            <h3>BMCT</h3>
+                            <p>Medical coding is indispensable in healthcare, as it transforms procedures, diagnoses...</p>
+                            <a href="#" class="learn-more">Learn More <span>&rarr;</span></a>
+                        </div>
+                    </div>
+
+                    <!-- Navigation arrows positioned over the card -->
+                    <span class="slider-arrow-on-card prev-arrow"><i class="fas fa-chevron-left"></i></span>
+                    <span class="slider-arrow-on-card next-arrow"><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <!-- Pagination dots remain below -->
+                <div class="slider-nav">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="stats-section">
+        <div class="stat-card scroll-animate"><div class="stat-icon" style="color: #226cf3;"><i class="fas fa-briefcase"></i></div><div class="stat-value">95%</div><div class="stat-label">Job Placement Rate</div></div>
+        <div class="stat-card scroll-animate"><div class="stat-icon" style="color: #2bb36f;"><i class="fas fa-user-graduate"></i></div><div class="stat-value">500+</div><div class="stat-label">Graduates Placed</div></div>
+        <div class="stat-card scroll-animate"><div class="stat-icon" style="color: #9936c9;"><i class="fas fa-clock"></i></div><div class="stat-value">15+</div><div class="stat-label">Years Experience</div></div>
+        <div class="stat-card scroll-animate"><div class="stat-icon" style="color: #ffc107;"><i class="fas fa-heart"></i></div><div class="stat-value">98%</div><div class="stat-label">Student Satisfaction</div></div>
+    </section>
+
+    <section class="about-section-final" id="about">
+        <div class="why-choose-container">
+            <div class="why-choose-image scroll-animate"><img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Healthcare professionals working"></div>
+            <div class="why-choose-content">
+                <h2 class="section-title scroll-animate">Why Choose D'Vine Healthcare?</h2>
+                <p class="section-subtitle scroll-animate">We are dedicated to providing the highest quality medical coding education that prepares you for a successful and rewarding career in the healthcare industry.</p>
+                <div class="numbered-feature scroll-animate"><div class="feature-number">01</div><div class="feature-details"><div class="feature-title">Industry-Recognized Certifications</div><div class="feature-desc">Our curriculum is designed to prepare you for CPC, CCS, and other leading certifications.</div></div></div>
+                <div class="numbered-feature scroll-animate"><div class="feature-number">02</div><div class="feature-details"><div class="feature-title">Expert-Led Instruction</div><div class="feature-desc">Learn from certified professionals with years of real-world experience in the field.</div></div></div>
+                <div class="numbered-feature scroll-animate"><div class="feature-number">03</div><div class="feature-details"><div class="feature-title">Practical, Hands-On Training</div><div class="feature-desc">Gain practical skills by working with real medical records and coding scenarios.</div></div></div>
+            </div>
+        </div>
+        <div class="mission-vision-tabs scroll-animate">
+            <div class="tab-buttons"><button class="tab-btn active" data-tab="mission">Our Mission</button><button class="tab-btn" data-tab="vision">Our Vision</button><button class="tab-btn" data-tab="values">Our Values</button></div>
+            <div id="mission" class="tab-content active"><i class="fas fa-bullseye"></i><h3>Our Mission</h3><p>To provide comprehensive, industry-leading medical coding education that empowers students to excel in their healthcare careers.</p></div>
+            <div id="vision" class="tab-content"><i class="fas fa-eye"></i><h3>Our Vision</h3><p>To be the premier global destination for medical coding education, known for our unwavering commitment to excellence, innovation, and student success.</p></div>
+            <div id="values" class="tab-content"><i class="fas fa-gem"></i><h3>Our Values</h3><p>Integrity, Excellence, Innovation, and a Student-Centered approach are the pillars that guide everything we do.</p></div>
+        </div>
+    </section>
+
+    <section class="testimonials-section" id="courses">
+        <div class="testimonials-container">
+            <div class="testimonials-left scroll-animate"><h2 class="section-title">What Our Students Say</h2><p class="section-subtitle">Hear from our successful graduates who are now thriving in their healthcare careers. Their success stories are our greatest pride.</p></div>
+            <div class="testimonials-right scroll-animate">
+                <div class="testimonial-slider">
+                    <div class="testimonial-card-new active">
+                        <p class="testimonial-quote-new">"D'Vine Healthcare's program prepared me perfectly for my certification exam. I landed my dream job within 2 months of graduation!"</p>
+                        <div class="testimonial-author-info">
+                            <div class="testimonial-media">
+                                <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sarah Johnson" class="testimonial-img">
+                                <span class="play-icon"><i class="fas fa-play"></i></span>
+                            </div>
+                            <div class="testimonial-author-details">
+                                <div class="testimonial-author-new">Sarah Johnson</div>
+                                <div class="testimonial-meta-new">CPC Graduate</div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="testimonial-card-new">
+                        <p class="testimonial-quote-new">"The instructors are amazing and the curriculum is comprehensive. I feel confident in my coding skills thanks to this program."</p>
+                         <div class="testimonial-author-info">
+                            <div class="testimonial-media">
+                                <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Michael Chen" class="testimonial-img">
+                                <span class="play-icon"><i class="fas fa-play"></i></span>
+                            </div>
+                            <div class="testimonial-author-details">
+                                <div class="testimonial-author-new">Michael Chen</div>
+                                <div class="testimonial-meta-new">CCS Graduate</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <p class="testimonial-quote-new">"Excellent training program with great support. The career services team helped me find the perfect position after I completed my courses."</p>
+                         <div class="testimonial-author-info">
+                            <div class="testimonial-media">
+                                <img src="https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Emily Rodriguez" class="testimonial-img">
+                                <span class="play-icon"><i class="fas fa-play"></i></span>
+                            </div>
+                            <div class="testimonial-author-details">
+                                <div class="testimonial-author-new">Emily Rodriguez</div>
+                                <div class="testimonial-meta-new">Medical Billing Graduate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section-new scroll-animate">
+        <div class="cta-content"><div class="cta-icon"><i class="fas fa-rocket"></i></div><h2 class="cta-title-new">Ready to Start Your Healthcare Career?</h2><p class="cta-desc-new">Join our next cohort and take the first step towards a rewarding career in medical coding and billing. Your future starts now.</p><button class="cta-btn-new">Enroll Today <span>&rarr;</span></button></div>
+    </section>
+
+    <footer class="site-footer" id="contact">
+        <div class="footer-main">
+            <div class="footer-col scroll-animate"><div class="footer-logo"><span class="logo-icon"><i class="fas fa-heart"></i></span><span class="footer-brand">D'Vine Healthcare</span></div><p>Empowering healthcare careers with medical coding excellence and dedication to student success.</p></div>
+            <div class="footer-col scroll-animate"><h3 class="footer-title">Quick Links</h3><ul class="footer-links"><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#courses">Courses</a></li><li><a href="#contact">Contact</a></li></ul></div>
+            <div class="footer-col scroll-animate"><h3 class="footer-title">Contact Us</h3><ul class="footer-links footer-contact-info"><li>info@dvinehealthcare.com</li><li>(555) 123-4567</li></ul></div>
+            <div class="footer-col scroll-animate"><h3 class="footer-title">Follow Us</h3><div class="footer-social"><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></div></div>
+        </div>
+        <div class="footer-bottom"><p>© 2025 D'Vine Healthcare. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p></div>
+    </footer>
+
+    <script>
+        // --- SCROLL ANIMATION SCRIPT ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-animate').forEach(element => {
+            observer.observe(element);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- MISSION/VISION TABS LOGIC ---
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => {
+                        content.classList.remove('active', 'mission', 'vision', 'values');
+                        content.style.animation = 'none';
+                        content.offsetHeight; /* trigger reflow */
+                        content.style.animation = null;
+                    });
+                    button.classList.add('active');
+                    const tabContent = document.getElementById(button.dataset.tab);
+                    tabContent.classList.add('active', button.dataset.tab);
+                });
+            });
+
+            // --- TESTIMONIAL SLIDER LOGIC ---
+            const testimonialSlider = document.querySelector('.testimonial-slider');
+            const testimonialSlides = document.querySelectorAll('.testimonial-card-new');
+            let testimonialCurrentIndex = 0;
+
+            function showNextTestimonial() {
+                if (testimonialSlides.length > 0) {
+                    testimonialSlides.forEach(slide => slide.classList.remove('active'));
+                    testimonialCurrentIndex = (testimonialCurrentIndex + 1) % testimonialSlides.length;
+                    testimonialSlider.style.transform = `translateX(-${testimonialCurrentIndex * 100}%)`;
+                    testimonialSlides[testimonialCurrentIndex].classList.add('active');
+                }
+            }
+
+            if (testimonialSlides.length > 1) {
+                setInterval(showNextTestimonial, 5000);
+                testimonialSlides[0].classList.add('active');
+            }
+            
+            // --- HERO SLIDER LOGIC ---
+            const courseCards = document.querySelectorAll('.course-card');
+            const dots = document.querySelectorAll('.slider-nav .dot');
+            const prevArrow = document.querySelector('.prev-arrow');
+            const nextArrow = document.querySelector('.next-arrow');
+            let courseCurrentIndex = 0;
+            let slideInterval;
+
+            function updateSlider(activeIndex) {
+                courseCards.forEach((card, i) => {
+                    card.classList.remove('active', 'stack-1', 'stack-2');
+                });
+
+                const stack1Index = (activeIndex + 1) % courseCards.length;
+                const stack2Index = (activeIndex + 2) % courseCards.length;
+
+                courseCards[activeIndex].classList.add('active');
+                if (courseCards.length > 1) {
+                    courseCards[stack1Index].classList.add('stack-1');
+                }
+                if (courseCards.length > 2) {
+                    courseCards[stack2Index].classList.add('stack-2');
+                }
+
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === activeIndex);
+                });
+            }
+
+            function resetSlideInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(() => {
+                    courseCurrentIndex = (courseCurrentIndex + 1) % courseCards.length;
+                    updateSlider(courseCurrentIndex);
+                }, 5000);
+            }
+
+            prevArrow.addEventListener('click', () => {
+                courseCurrentIndex = (courseCurrentIndex - 1 + courseCards.length) % courseCards.length;
+                updateSlider(courseCurrentIndex);
+                resetSlideInterval();
+            });
+
+            nextArrow.addEventListener('click', () => {
+                courseCurrentIndex = (courseCurrentIndex + 1) % courseCards.length;
+                updateSlider(courseCurrentIndex);
+                resetSlideInterval();
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    courseCurrentIndex = i;
+                    updateSlider(courseCurrentIndex);
+                    resetSlideInterval();
+                });
+            });
+            
+            updateSlider(courseCurrentIndex);
+            resetSlideInterval();
+
+
+            // --- HAMBURGER MENU LOGIC ---
+            const menuIcon = document.querySelector('.menu-icon');
+            const navRight = document.querySelector('.navbar-right');
+            menuIcon.addEventListener('click', () => {
+                navRight.classList.toggle('mobile-menu-open');
+            });
+
+            // --- PARALLAX EFFECT FOR WHY CHOOSE IMAGE ---
+            const whyChooseImage = document.querySelector('.why-choose-image img');
+            if (whyChooseImage) {
+                whyChooseImage.addEventListener('mousemove', (e) => {
+                    const rect = whyChooseImage.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    const tiltX = (y / rect.height) * 10;
+                    const tiltY = -(x / rect.width) * 10;
+                    whyChooseImage.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
+                });
+                whyChooseImage.addEventListener('mouseleave', () => {
+                    whyChooseImage.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
