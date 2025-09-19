@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,7 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             background: #fdfdff;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
         }
 
         /* --- SCROLL ANIMATION --- */
@@ -31,8 +32,14 @@
 
         /* --- STATS SECTION ANIMATIONS --- */
         @keyframes zoomIn {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .scroll-animate.stat-card {
@@ -58,8 +65,14 @@
 
         /* --- WHY CHOOSE SECTION ANIMATIONS --- */
         @keyframes fadeRotateIn {
-            0% { opacity: 0; transform: translateY(20px) rotate(-5deg); }
-            100% { opacity: 1; transform: translateY(0) rotate(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(20px) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
         }
 
         .numbered-feature {
@@ -206,7 +219,7 @@
             text-align: left;
             animation: slideInUp 0.8s forwards;
         }
-
+        
         @keyframes slideInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -265,8 +278,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: slideInUp 0.8s 0.2s forwards;
-            opacity: 0;
+             animation: slideInUp 0.8s 0.2s forwards;
+             opacity: 0;
         }
 
         .hero-slider-container {
@@ -275,7 +288,7 @@
             height: 400px;
             perspective: 1000px;
         }
-
+        
         .slider-arrow-on-card {
             position: absolute;
             top: 50%;
@@ -329,7 +342,7 @@
             transform: scale(1) translateY(0);
             z-index: 3;
         }
-
+        
         .course-card.stack-1 {
             opacity: 1;
             transform: scale(0.95) translateY(15px);
@@ -673,7 +686,7 @@
             display: flex;
             transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
         }
-
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -720,7 +733,7 @@
             top: -20px;
             opacity: 0.2;
         }
-
+        
         .testimonial-author-info {
             display: flex;
             align-items: center;
@@ -741,7 +754,7 @@
             display: block;
             transition: filter 0.3s ease;
         }
-
+        
         .testimonial-media:hover .testimonial-img {
             filter: brightness(0.8);
         }
@@ -768,7 +781,7 @@
             opacity: 1;
             transform: translate(-50%, -50%) scale(1.1);
         }
-
+        
         .testimonial-author-details {
             display: flex;
             flex-direction: column;
@@ -982,9 +995,8 @@
             text-decoration: underline;
         }
 
-        /* Mobile Responsive Styles */
         @media (max-width: 950px) {
-            .hero-container, .why-choose-container, .testimonials-container {
+             .hero-container {
                 flex-direction: column;
                 text-align: center;
             }
@@ -992,6 +1004,10 @@
                 text-align: center;
                 align-items: center;
                 margin-bottom: 2rem;
+            }
+            .why-choose-container, .testimonials-container {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
@@ -1011,302 +1027,32 @@
             }
             .navbar-right.mobile-menu-open { max-height: 500px; }
             .navbar-right .nav-link, .navbar-right .login-btn, .navbar-right .register-btn {
-                padding: 0.8rem;
-                margin: 0;
-                border-top: 1px solid #f0f0f0;
+                padding: 1rem; margin: 0; border-top: 1px solid #f0f0f0;
             }
         }
 
         @media (max-width: 768px) {
-            /* General size reductions */
-            body {
-                font-size: 14px;
-            }
+            .main-content h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2.2rem; }
+            .cta-title-new { font-size: 2rem; }
 
-            .navbar {
-                padding: 0.8rem 4%;
-            }
-
-            .logo {
-                width: 32px;
-                height: 32px;
-                font-size: 1.2rem;
-                margin-right: 8px;
-            }
-
-            .brand {
-                font-size: 1rem;
-            }
-
-            .menu-icon {
-                font-size: 1.2rem;
-            }
-
-            .navbar-right .nav-link {
-                font-size: 0.9rem;
-            }
-
-            .login-btn, .register-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .main-content {
-                padding: 3rem 4%;
-                min-height: auto;
-            }
-
-            .hero-left h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
-
-            .hero-left .description {
-                font-size: 0.9rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .hero-badge {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                margin-bottom: 1rem;
-            }
-
-            .register-btn-hero {
-                padding: 0.7rem 1.8rem;
-                font-size: 0.9rem;
-            }
-
-            .hero-slider-container {
-                width: 100%;
-                max-width: 300px;
-                height: 320px;
-            }
-
-            .course-card img {
-                height: 150px;
-            }
-
-            .course-card-content {
-                padding: 1rem;
-            }
-
-            .training-type {
-                font-size: 0.8rem;
-            }
-
-            .course-card h3 {
-                font-size: 1.2rem;
-            }
-
-            .course-card p {
-                font-size: 0.9rem;
-                height: auto;
-                line-height: 1.5;
-            }
-
-            .learn-more {
-                font-size: 0.9rem;
-            }
-
-            .slider-arrow-on-card {
-                width: 32px;
-                height: 32px;
-                font-size: 0.8rem;
-            }
-
-            .slider-nav .dot {
-                width: 8px;
-                height: 8px;
-            }
-
-            .stats-section {
-                margin: 40px auto;
-                padding: 0 4%;
-                gap: 20px;
-            }
-
-            .stat-card {
-                padding: 1.2rem;
-                min-width: 100%;
-            }
-
-            .stat-icon {
-                font-size: 2rem;
-            }
-
-            .stat-value {
-                font-size: 2rem;
-            }
-
-            .stat-label {
-                font-size: 0.9rem;
-            }
-
-            .about-section-final {
-                padding: 40px 4%;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .section-subtitle {
-                font-size: 0.9rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .why-choose-image img {
-                border-radius: 12px;
-            }
-
-            .numbered-feature {
-                padding: 1rem;
-                gap: 15px;
-            }
-
-            .feature-number {
-                width: 48px;
-                height: 48px;
-                font-size: 1.5rem;
-            }
-
-            .feature-details .feature-title {
-                font-size: 1rem;
-            }
-
-            .feature-details .feature-desc {
-                font-size: 0.9rem;
-            }
-
-            .mission-vision-tabs {
-                margin: 40px auto 0;
-            }
-
-            .tab-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .tab-content {
-                padding: 1.5rem;
-                border-radius: 12px;
-            }
-
-            .tab-content i {
-                font-size: 2rem;
-            }
-
-            .tab-content h3 {
-                font-size: 1.5rem;
-            }
-
-            .tab-content p {
-                font-size: 0.9rem;
-            }
-
-            .testimonials-section {
-                padding: 40px 4%;
-            }
-
-            /* Testimonial card readability improvements */
+            .main-content, .about-section-final, .testimonials-section, .cta-section-new { padding: 60px 5%; }
+            .stats-section { margin: 50px auto; }
+            
             .testimonial-card-new {
-                padding: 1.2rem;
-                border-radius: 12px;
+                padding: 1.5rem;
             }
 
             .testimonial-quote-new {
                 font-size: 1rem;
-                line-height: 1.7;
-                padding-left: 30px;
-                margin-bottom: 1.5rem;
+                line-height: 1.6;
             }
+        }
 
-            .testimonial-quote-new::before {
-                font-size: 3rem;
-                left: -5px;
-                top: -10px;
-            }
-
-            .testimonial-img {
-                width: 48px;
-                height: 48px;
-            }
-
-            .play-icon {
-                width: 24px;
-                height: 24px;
-                font-size: 0.7rem;
-            }
-
-            .testimonial-author-new {
-                font-size: 0.9rem;
-            }
-
-            .testimonial-meta-new {
-                font-size: 0.8rem;
-            }
-
-            .cta-section-new {
-                padding: 40px 4%;
-                margin: 40px auto;
-                border-radius: 16px;
-            }
-
-            .cta-icon {
-                font-size: 2.5rem;
-            }
-
-            .cta-title-new {
-                font-size: 1.8rem;
-            }
-
-            .cta-desc-new {
-                font-size: 0.9rem;
-                max-width: 500px;
-            }
-
-            .cta-btn-new {
-                padding: 0.7rem 1.8rem;
-                font-size: 0.9rem;
-            }
-
-            .site-footer {
-                padding: 40px 4%;
-            }
-
-            .footer-main {
-                gap: 30px;
-                margin-bottom: 30px;
-            }
-
-            .footer-logo .logo-icon {
-                font-size: 1.5rem;
-            }
-
-            .footer-brand {
-                font-size: 1.2rem;
-            }
-
-            .footer-col p {
-                font-size: 0.9rem;
-            }
-
-            .footer-title {
-                font-size: 1rem;
-            }
-
-            .footer-links a, .footer-contact-info li {
-                font-size: 0.9rem;
-            }
-
-            .footer-social a {
-                font-size: 1rem;
-            }
-
-            .footer-bottom {
-                font-size: 0.8rem;
-            }
+        @media (max-width: 768px) {
+            .footer-main { text-align: center; }
+            .footer-social { justify-content: center; }
+            .stat-card { min-width: 100%; }
         }
     </style>
 </head>
@@ -1334,13 +1080,13 @@
                     <span>🏆</span> The Leader in Medical Coding Training
                 </div>
                 <h1>The Leading Learning <span class="highlight">Platform</span> to Drive Your <span class="highlight">Career.</span></h1>
-                <p class="description">Discover our expert medical coding training programs. Get the knowledge and support you need to advance your career seamlessly.</p>
+                <p class="description">Discover our expert medical coding training programs. Get the knowledge and support you need to advance your career seamlessly..</p>
                 <button class="register-btn-hero">Register Today <span>&rarr;</span></button>
             </div>
             <div class="hero-right">
                 <div class="hero-slider-container">
                     <div class="course-card">
-                        <img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Advanced Medical Coding">
+                         <img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Advanced Medical Coding">
                         <div class="course-card-content">
                             <p class="training-type"><i class="fas fa-chalkboard-teacher"></i> Classroom / Online Training</p>
                             <h3>AMCT</h3>
@@ -1348,8 +1094,8 @@
                             <a href="#" class="learn-more">Learn More <span>&rarr;</span></a>
                         </div>
                     </div>
-                    <div class="course-card">
-                        <img src="https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Medical Billing">
+                     <div class="course-card">
+                         <img src="https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Medical Billing">
                         <div class="course-card-content">
                             <p class="training-type"><i class="fas fa-chalkboard-teacher"></i> Online Training</p>
                             <h3>MBC</h3>
@@ -1366,9 +1112,12 @@
                             <a href="#" class="learn-more">Learn More <span>&rarr;</span></a>
                         </div>
                     </div>
+
+                    <!-- Navigation arrows positioned over the card -->
                     <span class="slider-arrow-on-card prev-arrow"><i class="fas fa-chevron-left"></i></span>
                     <span class="slider-arrow-on-card next-arrow"><i class="fas fa-chevron-right"></i></span>
                 </div>
+                <!-- Pagination dots remain below -->
                 <div class="slider-nav">
                     <span class="dot"></span>
                     <span class="dot"></span>
@@ -1422,9 +1171,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card-new">
+                     <div class="testimonial-card-new">
                         <p class="testimonial-quote-new">"The instructors are amazing and the curriculum is comprehensive. I feel confident in my coding skills thanks to this program."</p>
-                        <div class="testimonial-author-info">
+                         <div class="testimonial-author-info">
                             <div class="testimonial-media">
                                 <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Michael Chen" class="testimonial-img">
                                 <span class="play-icon"><i class="fas fa-play"></i></span>
@@ -1437,7 +1186,7 @@
                     </div>
                     <div class="testimonial-card-new">
                         <p class="testimonial-quote-new">"Excellent training program with great support. The career services team helped me find the perfect position after I completed my courses."</p>
-                        <div class="testimonial-author-info">
+                         <div class="testimonial-author-info">
                             <div class="testimonial-media">
                                 <img src="https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Emily Rodriguez" class="testimonial-img">
                                 <span class="play-icon"><i class="fas fa-play"></i></span>
@@ -1483,6 +1232,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+
             // --- MISSION/VISION TABS LOGIC ---
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -1492,7 +1242,7 @@
                     tabContents.forEach(content => {
                         content.classList.remove('active', 'mission', 'vision', 'values');
                         content.style.animation = 'none';
-                        content.offsetHeight;
+                        content.offsetHeight; /* trigger reflow */
                         content.style.animation = null;
                     });
                     button.classList.add('active');
@@ -1519,7 +1269,7 @@
                 setInterval(showNextTestimonial, 5000);
                 testimonialSlides[0].classList.add('active');
             }
-
+            
             // --- HERO SLIDER LOGIC ---
             const courseCards = document.querySelectorAll('.course-card');
             const dots = document.querySelectorAll('.slider-nav .dot');
@@ -1568,7 +1318,7 @@
                 updateSlider(courseCurrentIndex);
                 resetSlideInterval();
             });
-
+            
             dots.forEach((dot, i) => {
                 dot.addEventListener('click', () => {
                     courseCurrentIndex = i;
@@ -1576,9 +1326,10 @@
                     resetSlideInterval();
                 });
             });
-
+            
             updateSlider(courseCurrentIndex);
             resetSlideInterval();
+
 
             // --- HAMBURGER MENU LOGIC ---
             const menuIcon = document.querySelector('.menu-icon');
